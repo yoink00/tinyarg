@@ -91,17 +91,15 @@ const char* test_tinyargs_undefined_arg_long_opt()
 	};
 	const int fail_size = 2;
 
-	bool arg1 = false;
-
 	struct tiny_args_t* args = NULL;
 
+	bool arg1 = false;
 	tiny_args_add_bool(&args, 'a', "abc", &arg1, NULL);
 	tu_assert_ptr_ne(args, NULL);
 	tu_assert_int_eq(args->short_opt, 'a');
 	tu_assert_str_eq(args->long_opt, "abc");
 
 	tu_assert_int_ne(tiny_args_parse(args, fail_size, fail), true);
-	tu_assert_int_eq(arg1, true);
 
 	tiny_args_destroy(args);
 
@@ -160,8 +158,8 @@ const char* test_tinyargs_fail_single_char_str_param_not_at_end()
 const char* testsuite_tinyargs()
 {
 	tu_run_test(test_tinyargs_pass);
-  tu_run_test(test_tinyargs_undefined_arg_short_opt);
-  tu_run_test(test_tinyargs_undefined_arg_long_opt);
+	tu_run_test(test_tinyargs_undefined_arg_short_opt);
+	tu_run_test(test_tinyargs_undefined_arg_long_opt);
 	tu_run_test(test_tinyargs_fail_double_dash);
 	tu_run_test(test_tinyargs_fail_empty_arg);
 	tu_run_test(test_tinyargs_fail_single_char_str_param_not_at_end);

@@ -185,6 +185,9 @@ void tiny_args_add_bool(struct tiny_args_t** args,
 {
 	struct tiny_args_t* arg = _create_new_arg(args);
 
+	//Initialise bool flag to be false;
+	*flag = false;
+
 	arg->short_opt = short_opt;
 	arg->long_opt = strdup(long_opt);
 	arg->flag = flag;
@@ -208,6 +211,9 @@ void tiny_args_add_str(struct tiny_args_t** args,
 											 const char* desc)
 {
 	struct tiny_args_t* arg = _create_new_arg(args);
+
+	//Initialise chararray to be empty
+	*str = '\0';
 
 	arg->short_opt = short_opt;
 	arg->long_opt = strdup(long_opt);

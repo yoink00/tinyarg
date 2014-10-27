@@ -25,7 +25,7 @@ const char* test_tinyargs_pass()
 	};
 	const int pass_size = 7;
 
-	bool arg1 = false;
+	bool arg1;
 	char arg2[1024];
 	char arg3[1024];
 
@@ -66,7 +66,7 @@ const char* test_tinyargs_undefined_arg_short_opt()
 	};
 	const int fail_size = 2;
 
-	bool arg1 = false;
+	bool arg1;
 
 	struct tiny_args_t* args = NULL;
 
@@ -91,7 +91,7 @@ const char* test_tinyargs_undefined_arg_long_opt()
 	};
 	const int fail_size = 2;
 
-	bool arg1 = false;
+	bool arg1;
 
 	struct tiny_args_t* args = NULL;
 
@@ -101,7 +101,7 @@ const char* test_tinyargs_undefined_arg_long_opt()
 	tu_assert_str_eq(args->long_opt, "abc");
 
 	tu_assert_int_ne(tiny_args_parse(args, fail_size, fail), true);
-	tu_assert_int_eq(arg1, true);
+	tu_assert_int_eq(arg1, false);
 
 	tiny_args_destroy(args);
 

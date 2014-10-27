@@ -160,8 +160,8 @@ const char* test_tinyargs_fail_single_char_str_param_not_at_end()
 const char* testsuite_tinyargs()
 {
 	tu_run_test(test_tinyargs_pass);
-  tu_run_test(test_tinyargs_undefined_arg_short_opt);
-  tu_run_test(test_tinyargs_undefined_arg_long_opt);
+	tu_run_test(test_tinyargs_undefined_arg_short_opt);
+	tu_run_test(test_tinyargs_undefined_arg_long_opt);
 	tu_run_test(test_tinyargs_fail_double_dash);
 	tu_run_test(test_tinyargs_fail_empty_arg);
 	tu_run_test(test_tinyargs_fail_single_char_str_param_not_at_end);

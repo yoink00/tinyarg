@@ -23,6 +23,12 @@ void tiny_args_add_str(struct tiny_args_t** args,
                        size_t str_len,
                        const char* desc);
 
+void tiny_args_add_int(struct tiny_args_t** args,
+                       char short_opt,
+                       const char* long_opt,
+                       int* val,
+                       const char* desc);
+
 void tiny_args_usage(const char* process_name, struct tiny_args_t* args);
 
 void tiny_args_destroy(struct tiny_args_t* args);

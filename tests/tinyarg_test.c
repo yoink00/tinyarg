@@ -157,6 +157,32 @@ const char* test_tinyargs_fail_single_char_str_param_not_at_end()
 	return MU_SUCCESS;
 }
 
+const char* test_tinyargs_int()
+{
+	const char* pass[] = {
+		"",
+		"-d",
+		"1234",
+		"--ddd",
+		"9999"
+	};
+	const int pass_size = 5;
+
+	int arg1 = 0;
+	int arg2 = 0;
+
+	struct tiny_args_t* args = NULL;
+	tiny_args_add_int(&args, 'd', "abc", &arg1, NULL);
+	tiny_args_add_int(&args, 'a', "ddd", &arg2, NULL);
+	tu_assert_int_eq(tiny_args_parse(args, pass_size, pass), true);
+	tu_assert_int_eq(arg1, 1234);
+	tu_assert_int_eq(arg2, 9999);
+
+	tiny_args_destroy(args);
+
+	return MU_SUCCESS;
+}
+
 const char* testsuite_tinyargs()
 {
 	tu_run_test(test_tinyargs_pass);
@@ -165,6 +191,7 @@ const char* testsuite_tinyargs()
 	tu_run_test(test_tinyargs_fail_double_dash);
 	tu_run_test(test_tinyargs_fail_empty_arg);
 	tu_run_test(test_tinyargs_fail_single_char_str_param_not_at_end);
+	tu_run_test(test_tinyargs_int);
 
 	return MU_SUCCESS;
 }

@@ -12,6 +12,7 @@ struct tiny_args_t
 	char* long_opt;
 	bool* flag;
 	char* str;
+	int*  val;
 	size_t str_len;
 	char* desc;
 	struct tiny_args_t* next_arg;
@@ -37,11 +38,25 @@ int _process_long_form(struct tiny_args_t* args, int argc, const char* argv[], i
 			(*args->flag) = true;
 			return idx;
 		}
-		else if(args->str != NULL && (idx + 1) < argc)
+		else if((args->str != NULL || args->val != NULL) && (idx + 1) < argc)
 		{
-			int cpy_len = MIN(strlen(argv[idx+1]), args->str_len);
-			memcpy(args->str, argv[idx+1], cpy_len);
-			args->str[cpy_len] = '\0';
+			char valStr[10];
+			char* str_ptr = args->str;
+			int len = args->str_len;
+			if(args->val != NULL)
+      {
+				str_ptr = valStr;
+        len = 10;
+      }
+			int cpy_len = MIN(strlen(argv[idx+1]), len);
+			memcpy(str_ptr, argv[idx+1], cpy_len);
+			str_ptr[cpy_len] = '\0';
+
+
+			if(args->val != NULL)
+      {
+				*(args->val) = atoi(valStr);
+			}
 			return (idx + 1);
 		}
 		else
@@ -82,7 +97,7 @@ int _process_short_form(struct tiny_args_t* args, int argc, const char* argv[], 
 		{
 			(*arg->flag) = true;
 		}
-		else if(arg->str != NULL && (idx + 1) < argc)
+		else if((arg->str != NULL || arg->val != NULL) && (idx + 1) < argc)
 		{
 			if(*(flag + 1) != '\0')
 			{
@@ -90,9 +105,22 @@ int _process_short_form(struct tiny_args_t* args, int argc, const char* argv[], 
 				return -1;
 			}
 
-			int cpy_len = MIN(strlen(argv[idx+1]), arg->str_len);
-			memcpy(arg->str, argv[idx+1], cpy_len);
-			arg->str[cpy_len] = '\0';
+			char valStr[10];
+			char* str_ptr = arg->str;
+			int len = arg->str_len;
+			if(arg->val != NULL)
+      {
+				str_ptr = valStr;
+        len = 10;
+      }
+			int cpy_len = MIN(strlen(argv[idx+1]), len);
+			memcpy(str_ptr, argv[idx+1], cpy_len);
+			str_ptr[cpy_len] = '\0';
+
+			if(arg->val != NULL)
+      {
+				*(arg->val) = atoi(valStr);
+			}
 			return (idx + 1);
 		}
 		else
@@ -191,6 +219,33 @@ void tiny_args_add_bool(struct tiny_args_t** args,
 	arg->short_opt = short_opt;
 	arg->long_opt = strdup(long_opt);
 	arg->flag = flag;
+	arg->str = NULL;
+	if(desc != NULL)
+	{
+		arg->desc = strdup(desc);
+	}
+	else
+	{
+		arg->desc = NULL;
+	}
+	arg->next_arg = NULL;
+}
+
+void tiny_args_add_int(struct tiny_args_t** args,
+                       char short_opt,
+                       const char* long_opt,
+                       int* val,
+                       const char* desc)
+{
+	struct tiny_args_t* arg = _create_new_arg(args);
+
+	//Initialise bool flag to be zero
+	*val = 0;
+
+	arg->short_opt = short_opt;
+	arg->long_opt = strdup(long_opt);
+	arg->flag = NULL;
+	arg->val = val;
 	arg->str = NULL;
 	if(desc != NULL)
 	{

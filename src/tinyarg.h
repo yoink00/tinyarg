@@ -1,6 +1,8 @@
 #ifndef __TINYARG_H__
 #define __TINYARG_H__
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C"
 {

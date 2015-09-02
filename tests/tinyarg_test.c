@@ -183,6 +183,40 @@ const char* test_tinyargs_int()
 	return MU_SUCCESS;
 }
 
+const char* test_tinyargs_short_opt_too_long()
+{
+	const char* pass[] = {
+		"",
+		"-d",
+		"1234",
+	};
+	const int pass_size = 3;
+
+	char arg1[3];
+    int arg1_len = 3;
+
+	struct tiny_args_t* args = NULL;
+	tiny_args_add_str(&args, 'd', "abc", arg1, arg1_len, NULL);
+	tu_assert_int_eq(tiny_args_parse(args, pass_size, pass), false);
+}
+
+const char* test_tinyargs_long_opt_too_long()
+{
+	const char* pass[] = {
+		"",
+		"--abcd",
+		"1234",
+	};
+	const int pass_size = 3;
+
+	char arg1[3];
+    int arg1_len = 3;
+
+	struct tiny_args_t* args = NULL;
+	tiny_args_add_str(&args, 'd', "abcd", arg1, arg1_len, NULL);
+	tu_assert_int_eq(tiny_args_parse(args, pass_size, pass), false);
+}
+
 const char* testsuite_tinyargs()
 {
 	tu_run_test(test_tinyargs_pass);
@@ -192,6 +226,8 @@ const char* testsuite_tinyargs()
 	tu_run_test(test_tinyargs_fail_empty_arg);
 	tu_run_test(test_tinyargs_fail_single_char_str_param_not_at_end);
 	tu_run_test(test_tinyargs_int);
+	tu_run_test(test_tinyargs_short_opt_too_long);
+	tu_run_test(test_tinyargs_long_opt_too_long);
 
 	return MU_SUCCESS;
 }

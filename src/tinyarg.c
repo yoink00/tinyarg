@@ -49,7 +49,7 @@ int _process_long_form(struct tiny_args_t* args, int argc, const char* argv[], i
                 len = 10;
             }
 
-            if(strlen(argv[idx+1]) >= len)
+            if(strlen(argv[idx+1]) > len)
             {
                 fprintf(stderr, "Passed argument for '--%s' is too long. Maximum is %d", flag, len);
                 return -1;

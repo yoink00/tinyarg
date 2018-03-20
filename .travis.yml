@@ -1,2 +1,2 @@
 language: c
-script: cmake . && make clean all && ./tinylog_test
+script: cmake . && make clean all && ls -l && ./tinylog_test
